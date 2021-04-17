@@ -35,13 +35,6 @@
         />
       </FormItem>
 
-      <FormItem class="enter-x" name="policy">
-        <!-- No logic, you need to deal with it yourself -->
-        <Checkbox v-model:checked="formData.policy" size="small">
-          {{ t('sys.login.policy') }}
-        </Checkbox>
-      </FormItem>
-
       <Button
         type="primary"
         class="enter-x"
@@ -50,75 +43,75 @@
         @click="handleRegister"
         :loading="loading"
       >
-        {{ t('sys.login.registerButton') }}
+        {{ t("sys.login.registerButton") }}
       </Button>
       <Button size="large" block class="enter-x mt-4" @click="handleBackLogin">
-        {{ t('sys.login.backSignIn') }}
+        {{ t("sys.login.backSignIn") }}
       </Button>
     </Form>
   </template>
 </template>
 <script lang="ts">
-  import { defineComponent, reactive, ref, unref, computed } from 'vue';
+import { defineComponent, reactive, ref, unref, computed } from "vue";
 
-  import LoginFormTitle from './LoginFormTitle.vue';
-  import { Form, Input, Button, Checkbox } from 'ant-design-vue';
-  import { StrengthMeter } from '/@/components/StrengthMeter';
-  import { CountdownInput } from '/@/components/CountDown';
+import LoginFormTitle from "./LoginFormTitle.vue";
+import { Form, Input, Button, Checkbox } from "ant-design-vue";
+import { StrengthMeter } from "/@/components/StrengthMeter";
+import { CountdownInput } from "/@/components/CountDown";
 
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from './useLogin';
+import { useI18n } from "/@/hooks/web/useI18n";
+import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from "./useLogin";
 
-  export default defineComponent({
-    name: 'RegisterPasswordForm',
-    components: {
-      Button,
-      Form,
-      FormItem: Form.Item,
-      Input,
-      InputPassword: Input.Password,
-      Checkbox,
-      StrengthMeter,
-      CountdownInput,
-      LoginFormTitle,
-    },
-    setup() {
-      const { t } = useI18n();
-      const { handleBackLogin, getLoginState } = useLoginState();
+export default defineComponent({
+  name: "RegisterPasswordForm",
+  components: {
+    Button,
+    Form,
+    FormItem: Form.Item,
+    Input,
+    InputPassword: Input.Password,
+    Checkbox,
+    StrengthMeter,
+    CountdownInput,
+    LoginFormTitle,
+  },
+  setup() {
+    const { t } = useI18n();
+    const { handleBackLogin, getLoginState } = useLoginState();
 
-      const formRef = ref();
-      const loading = ref(false);
+    const formRef = ref();
+    const loading = ref(false);
 
-      const formData = reactive({
-        account: '',
-        password: '',
-        confirmPassword: '',
-        mobile: '',
-        sms: '',
-        policy: false,
-      });
+    const formData = reactive({
+      account: "",
+      password: "",
+      confirmPassword: "",
+      mobile: "",
+      sms: "",
+      policy: false,
+    });
 
-      const { getFormRules } = useFormRules(formData);
-      const { validForm } = useFormValid(formRef);
+    const { getFormRules } = useFormRules(formData);
+    const { validForm } = useFormValid(formRef);
 
-      const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER);
+    const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER);
 
-      async function handleRegister() {
-        const data = await validForm();
-        if (!data) return;
-        console.log(data);
-      }
+    async function handleRegister() {
+      const data = await validForm();
+      if (!data) return;
+      console.log(data);
+    }
 
-      return {
-        t,
-        formRef,
-        formData,
-        getFormRules,
-        handleRegister,
-        loading,
-        handleBackLogin,
-        getShow,
-      };
-    },
-  });
+    return {
+      t,
+      formRef,
+      formData,
+      getFormRules,
+      handleRegister,
+      loading,
+      handleBackLogin,
+      getShow,
+    };
+  },
+});
 </script>
