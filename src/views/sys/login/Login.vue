@@ -1,32 +1,25 @@
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
-    <AppLocalePicker
-      class="absolute top-4 right-4 enter-x text-white xl:text-gray-600"
-      :showText="false"
-    />
-    <AppDarkModeToggle class="absolute top-3 right-7 enter-x" />
+    <AppLocalePicker class="absolute top-4 right-4 text-white xl:text-gray-600" :showText="false" />
+    <AppDarkModeToggle class="absolute top-3 right-7" />
 
     <div class="xl:container mx-auto relative h-full w-full py-2 px-10">
       <div class="flex h-full w-full">
         <div class="flex flex-col w-6/12 min-h-full mr-4 pl-4">
           <div class="my-auto">
-            <img
-              :alt="title"
-              src="../../../assets/svg/login-box-bg.svg"
-              class="w-1/2 -mt-16 -enter-x"
-            />
-            <div class="mt-10 font-medium text-white -enter-x">
+            <img :alt="title" src="../../../assets/svg/login-box-bg.svg" class="w-1/2 -mt-16" />
+            <div class="mt-10 font-medium text-white">
               <span class="mt-4 text-3xl inline-block"> {{ t("sys.login.signInTitle") }}</span>
             </div>
-            <div class="mt-5 text-md text-white font-normal dark:text-gray-500 -enter-x">
+            <div class="mt-5 text-md text-white font-normal dark:text-gray-500">
               {{ t("sys.login.signInDesc") }}
             </div>
           </div>
         </div>
-        <div class="h-full xl:h-auto flex py-5 xl:py-0 xl:my-0 xl:w-6/12">
+        <div class="h-full xl:h-auto flex py-5">
           <div
             :class="`${prefixCls}-form`"
-            class="my-auto mx-auto xl:ml-20 xl:bg-transparent px-5 py-8 sm:px-8 xl:p-4 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto enter-x relative"
+            class="my-auto mx-auto xl:ml-20 xl:bg-transparent px-5 py-8 rounded-md shadow-md xl:shadow-none w-full relative"
           >
             <LoginForm />
             <ForgetPasswordForm />
@@ -77,9 +70,9 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
-@prefix-cls: ~"@{namespace}-login";
-@logo-prefix-cls: ~"@{namespace}-app-logo";
-@countdown-prefix-cls: ~"@{namespace}-countdown-input";
+@prefix-cls: ~"login";
+@logo-prefix-cls: ~"app-logo";
+@countdown-prefix-cls: ~"countdown-input";
 @dark-bg: #293146;
 
 html[data-theme="dark"] {

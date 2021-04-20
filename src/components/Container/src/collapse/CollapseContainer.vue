@@ -29,100 +29,100 @@
   </div>
 </template>
 <script lang="ts">
-  import type { PropType } from 'vue';
+import type { PropType } from "vue";
 
-  import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed } from "vue";
 
-  // component
-  import { Skeleton } from 'ant-design-vue';
-  import { CollapseTransition } from '/@/components/Transition';
-  import CollapseHeader from './CollapseHeader.vue';
+// component
+import { Skeleton } from "ant-design-vue";
+import { CollapseTransition } from "/@/components/Transition";
+import CollapseHeader from "./CollapseHeader.vue";
 
-  import { triggerWindowResize } from '/@/utils/event';
-  // hook
-  import { useTimeoutFn } from '/@/hooks/core/useTimeout';
-  import { propTypes } from '/@/utils/propTypes';
-  import { useDesign } from '/@/hooks/web/useDesign';
+import { triggerWindowResize } from "/@/utils/event";
+// hook
+import { useTimeoutFn } from "/@/hooks/core/useTimeout";
+import { propTypes } from "/@/utils/propTypes";
+import { useDesign } from "/@/hooks/web/useDesign";
 
-  export default defineComponent({
-    name: 'CollapseContainer',
-    components: {
-      Skeleton,
-      CollapseHeader,
-      CollapseTransition,
+export default defineComponent({
+  name: "CollapseContainer",
+  components: {
+    Skeleton,
+    CollapseHeader,
+    CollapseTransition,
+  },
+  props: {
+    title: propTypes.string.def(""),
+    // Can it be expanded
+    canExpan: propTypes.bool.def(true),
+    // Warm reminder on the right side of the title
+    helpMessage: {
+      type: [Array, String] as PropType<string[] | string>,
+      default: "",
     },
-    props: {
-      title: propTypes.string.def(''),
-      // Can it be expanded
-      canExpan: propTypes.bool.def(true),
-      // Warm reminder on the right side of the title
-      helpMessage: {
-        type: [Array, String] as PropType<string[] | string>,
-        default: '',
-      },
-      // Whether to trigger window.resize when expanding and contracting,
-      // Can adapt to tables and forms, when the form shrinks, the form triggers resize to adapt to the height
-      triggerWindowResize: propTypes.bool,
-      loading: propTypes.bool.def(false),
-      active: propTypes.bool.def(true),
-      // Delayed loading time
-      lazyTime: propTypes.number.def(0),
-    },
-    setup(props) {
-      const show = ref(true);
+    // Whether to trigger window.resize when expanding and contracting,
+    // Can adapt to tables and forms, when the form shrinks, the form triggers resize to adapt to the height
+    triggerWindowResize: propTypes.bool,
+    loading: propTypes.bool.def(false),
+    active: propTypes.bool.def(true),
+    // Delayed loading time
+    lazyTime: propTypes.number.def(0),
+  },
+  setup(props) {
+    const show = ref(true);
 
-      const { prefixCls } = useDesign('collapse-container');
+    const { prefixCls } = useDesign("collapse-container");
 
-      /**
-       * @description: Handling development events
-       */
-      function handleExpand() {
-        show.value = !show.value;
-        if (props.triggerWindowResize) {
-          // 200 milliseconds here is because the expansion has animation,
-          useTimeoutFn(triggerWindowResize, 200);
-        }
+    /**
+     * @description: Handling development events
+     */
+    function handleExpand() {
+      show.value = !show.value;
+      if (props.triggerWindowResize) {
+        // 200 milliseconds here is because the expansion has animation,
+        useTimeoutFn(triggerWindowResize, 200);
       }
+    }
 
-      const getBindValues = computed((): any => {
-        return props;
-      });
+    const getBindValues = computed((): any => {
+      return props;
+    });
 
-      return {
-        show,
-        handleExpand,
-        prefixCls,
-        getBindValues,
-      };
-    },
-  });
+    return {
+      show,
+      handleExpand,
+      prefixCls,
+      getBindValues,
+    };
+  },
+});
 </script>
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-collapse-container';
+@prefix-cls: ~"collapse-container";
 
-  .@{prefix-cls} {
-    background-color: @component-background;
-    border-radius: 2px;
-    transition: all 0.3s ease-in-out;
+.@{prefix-cls} {
+  background-color: @component-background;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
 
-    &__header {
-      display: flex;
-      height: 32px;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid @border-color-light;
-    }
-
-    &__footer {
-      border-top: 1px solid @border-color-light;
-    }
-
-    &__action {
-      display: flex;
-      text-align: right;
-      flex: 1;
-      align-items: center;
-      justify-content: flex-end;
-    }
+  &__header {
+    display: flex;
+    height: 32px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid @border-color-light;
   }
+
+  &__footer {
+    border-top: 1px solid @border-color-light;
+  }
+
+  &__action {
+    display: flex;
+    text-align: right;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
 </style>

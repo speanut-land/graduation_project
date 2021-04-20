@@ -1,6 +1,6 @@
-@menu-prefix-cls: ~'@{namespace}-menu';
-@menu-popup-prefix-cls: ~'@{namespace}-menu-popup';
-@submenu-popup-prefix-cls: ~'@{namespace}-menu-submenu-popup';
+@menu-prefix-cls: ~"menu";
+@menu-popup-prefix-cls: ~"menu-popup";
+@submenu-popup-prefix-cls: ~"menu-submenu-popup";
 
 @transition-time: 0.2s;
 @menu-dark-subsidiary-color: rgba(255, 255, 255, 0.7);
@@ -14,7 +14,7 @@
     display: block;
     width: 2px;
     background-color: @primary-color;
-    content: '';
+    content: "";
   }
 }
 
@@ -245,7 +245,7 @@
           width: 3px;
           height: 100%;
           background-color: @primary-color;
-          content: '';
+          content: "";
         }
       }
     }
@@ -277,7 +277,7 @@
           width: 3px;
           height: 100%;
           background-color: @primary-color;
-          content: '';
+          content: "";
         }
 
         .@{menu-prefix-cls}-submenu-collapse {

@@ -5,70 +5,70 @@
   </span>
 </template>
 <script lang="ts">
-  import type { PropType } from 'vue';
+import type { PropType } from "vue";
 
-  import { defineComponent, computed } from 'vue';
-  import BasicHelp from './BasicHelp.vue';
+import { defineComponent, computed } from "vue";
+import BasicHelp from "./BasicHelp.vue";
 
-  import { useDesign } from '/@/hooks/web/useDesign';
+import { useDesign } from "/@/hooks/web/useDesign";
 
-  import { propTypes } from '/@/utils/propTypes';
+import { propTypes } from "/@/utils/propTypes";
 
-  export default defineComponent({
-    name: 'BasicTitle',
-    components: { BasicHelp },
-    props: {
-      helpMessage: {
-        type: [String, Array] as PropType<string | string[]>,
-        default: '',
-      },
-      span: propTypes.bool,
-      normal: propTypes.bool.def(false),
+export default defineComponent({
+  name: "BasicTitle",
+  components: { BasicHelp },
+  props: {
+    helpMessage: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: "",
     },
-    setup(props, { slots }) {
-      const { prefixCls } = useDesign('basic-title');
+    span: propTypes.bool,
+    normal: propTypes.bool.def(false),
+  },
+  setup(props, { slots }) {
+    const { prefixCls } = useDesign("basic-title");
 
-      const getClass = computed(() => [
-        prefixCls,
-        { [`${prefixCls}-show-span`]: props.span && slots.default },
-        { [`${prefixCls}-normal`]: props.normal },
-      ]);
-      return { prefixCls, getClass };
-    },
-  });
+    const getClass = computed(() => [
+      prefixCls,
+      { [`${prefixCls}-show-span`]: props.span && slots.default },
+      { [`${prefixCls}-normal`]: props.normal },
+    ]);
+    return { prefixCls, getClass };
+  },
+});
 </script>
 <style lang="less" scoped>
-  @prefix-cls: ~'@{namespace}-basic-title';
+@prefix-cls: ~"basic-title";
 
-  .@{prefix-cls} {
-    position: relative;
-    display: flex;
-    padding-left: 7px;
-    font-size: 16px;
+.@{prefix-cls} {
+  position: relative;
+  display: flex;
+  padding-left: 7px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: @text-color-base;
+  cursor: pointer;
+  user-select: none;
+
+  &-normal {
+    font-size: 14px;
     font-weight: 500;
-    line-height: 24px;
-    color: @text-color-base;
-    cursor: pointer;
-    user-select: none;
-
-    &-normal {
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    &-show-span::before {
-      position: absolute;
-      top: 4px;
-      left: 0;
-      width: 3px;
-      height: 16px;
-      margin-right: 4px;
-      background-color: @primary-color;
-      content: '';
-    }
-
-    &__help {
-      margin-left: 10px;
-    }
   }
+
+  &-show-span::before {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 3px;
+    height: 16px;
+    margin-right: 4px;
+    background-color: @primary-color;
+    content: "";
+  }
+
+  &__help {
+    margin-left: 10px;
+  }
+}
 </style>

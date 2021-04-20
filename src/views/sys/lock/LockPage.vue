@@ -10,7 +10,7 @@
       v-show="showDate"
     >
       <LockOutlined />
-      <span>{{ t('sys.lock.unlock') }}</span>
+      <span>{{ t("sys.lock.unlock") }}</span>
     </div>
 
     <div class="flex w-screen h-screen justify-center items-center">
@@ -27,41 +27,37 @@
     <transition name="fade-slide">
       <div :class="`${prefixCls}-entry`" v-show="!showDate">
         <div :class="`${prefixCls}-entry-content`">
-          <div :class="`${prefixCls}-entry__header enter-x`">
+          <div :class="`${prefixCls}-entry__header `">
             <img :src="headerImg" :class="`${prefixCls}-entry__header-img`" />
             <p :class="`${prefixCls}-entry__header-name`">
               {{ realName }}
             </p>
           </div>
-          <InputPassword
-            :placeholder="t('sys.lock.placeholder')"
-            class="enter-x"
-            v-model:value="password"
-          />
-          <span :class="`${prefixCls}-entry__err-msg enter-x`" v-if="errMsg">
-            {{ t('sys.lock.alert') }}
+          <InputPassword :placeholder="t('sys.lock.placeholder')" v-model:value="password" />
+          <span :class="`${prefixCls}-entry__err-msg `" v-if="errMsg">
+            {{ t("sys.lock.alert") }}
           </span>
-          <div :class="`${prefixCls}-entry__footer enter-x`">
+          <div :class="`${prefixCls}-entry__footer `">
             <a-button
               type="link"
               size="small"
-              class="mt-2 mr-2 enter-x"
+              class="mt-2 mr-2"
               :disabled="loading"
               @click="handleShowForm(true)"
             >
-              {{ t('common.back') }}
+              {{ t("common.back") }}
             </a-button>
             <a-button
               type="link"
               size="small"
-              class="mt-2 mr-2 enter-x"
+              class="mt-2 mr-2"
               :disabled="loading"
               @click="goLogin"
             >
-              {{ t('sys.lock.backToLogin') }}
+              {{ t("sys.lock.backToLogin") }}
             </a-button>
             <a-button class="mt-2" type="link" size="small" @click="unLock()" :loading="loading">
-              {{ t('sys.lock.entry') }}
+              {{ t("sys.lock.entry") }}
             </a-button>
           </div>
         </div>
@@ -69,190 +65,190 @@
     </transition>
 
     <div class="absolute bottom-5 w-full text-gray-300 xl:text-xl 2xl:text-3xl text-center enter-y">
-      <div class="text-5xl mb-4 enter-x" v-show="!showDate">
+      <div class="text-5xl mb-4" v-show="!showDate">
         {{ hour }}:{{ minute }} <span class="text-3xl">{{ meridiem }}</span>
       </div>
-      <div class="text-2xl"> {{ year }}/{{ month }}/{{ day }} {{ week }} </div>
+      <div class="text-2xl">{{ year }}/{{ month }}/{{ day }} {{ week }}</div>
     </div>
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed } from 'vue';
-  import { Input } from 'ant-design-vue';
+import { defineComponent, ref, computed } from "vue";
+import { Input } from "ant-design-vue";
 
-  import { useUserStore } from '/@/store/modules/user';
-  import { useLockStore } from '/@/store/modules/lock';
-  import { useI18n } from '/@/hooks/web/useI18n';
+import { useUserStore } from "/@/store/modules/user";
+import { useLockStore } from "/@/store/modules/lock";
+import { useI18n } from "/@/hooks/web/useI18n";
 
-  import { useNow } from './useNow';
-  import { useDesign } from '/@/hooks/web/useDesign';
+import { useNow } from "./useNow";
+import { useDesign } from "/@/hooks/web/useDesign";
 
-  import { LockOutlined } from '@ant-design/icons-vue';
-  import headerImg from '/@/assets/images/header.jpg';
+import { LockOutlined } from "@ant-design/icons-vue";
+import headerImg from "/@/assets/images/header.jpg";
 
-  export default defineComponent({
-    name: 'LockPage',
-    components: { LockOutlined, InputPassword: Input.Password },
+export default defineComponent({
+  name: "LockPage",
+  components: { LockOutlined, InputPassword: Input.Password },
 
-    setup() {
-      const password = ref('');
-      const loading = ref(false);
-      const errMsg = ref(false);
-      const showDate = ref(true);
+  setup() {
+    const password = ref("");
+    const loading = ref(false);
+    const errMsg = ref(false);
+    const showDate = ref(true);
 
-      const { prefixCls } = useDesign('lock-page');
-      const lockStore = useLockStore();
-      const userStore = useUserStore();
+    const { prefixCls } = useDesign("lock-page");
+    const lockStore = useLockStore();
+    const userStore = useUserStore();
 
-      const { ...state } = useNow(true);
+    const { ...state } = useNow(true);
 
-      const { t } = useI18n();
+    const { t } = useI18n();
 
-      const realName = computed(() => {
-        const { realName } = userStore.getUserInfo || {};
-        return realName;
-      });
+    const realName = computed(() => {
+      const { realName } = userStore.getUserInfo || {};
+      return realName;
+    });
 
-      /**
-       * @description: unLock
-       */
-      async function unLock() {
-        if (!password.value) {
-          return;
-        }
-        let pwd = password.value;
-        try {
-          loading.value = true;
-          const res = await lockStore.unLock(pwd);
-          errMsg.value = !res;
-        } finally {
-          loading.value = false;
-        }
+    /**
+     * @description: unLock
+     */
+    async function unLock() {
+      if (!password.value) {
+        return;
       }
-
-      function goLogin() {
-        userStore.logout(true);
-        lockStore.resetLockInfo();
+      let pwd = password.value;
+      try {
+        loading.value = true;
+        const res = await lockStore.unLock(pwd);
+        errMsg.value = !res;
+      } finally {
+        loading.value = false;
       }
+    }
 
-      function handleShowForm(show = false) {
-        showDate.value = show;
-      }
+    function goLogin() {
+      userStore.logout(true);
+      lockStore.resetLockInfo();
+    }
 
-      return {
-        goLogin,
-        realName,
-        unLock,
-        errMsg,
-        loading,
-        t,
-        prefixCls,
-        showDate,
-        password,
-        handleShowForm,
-        headerImg,
-        ...state,
-      };
-    },
-  });
+    function handleShowForm(show = false) {
+      showDate.value = show;
+    }
+
+    return {
+      goLogin,
+      realName,
+      unLock,
+      errMsg,
+      loading,
+      t,
+      prefixCls,
+      showDate,
+      password,
+      handleShowForm,
+      headerImg,
+      ...state,
+    };
+  },
+});
 </script>
 <style lang="less" scoped>
-  @prefix-cls: ~'@{namespace}-lock-page';
+@prefix-cls: ~"lock-page";
 
-  .@{prefix-cls} {
-    z-index: @lock-page-z-index;
+.@{prefix-cls} {
+  z-index: @lock-page-z-index;
 
-    &__unlock {
-      transform: translate(-50%, 0);
-    }
+  &__unlock {
+    transform: translate(-50%, 0);
+  }
 
-    &__hour,
-    &__minute {
-      display: flex;
-      font-weight: 700;
-      color: #bababa;
-      background-color: #141313;
-      border-radius: 30px;
-      justify-content: center;
-      align-items: center;
+  &__hour,
+  &__minute {
+    display: flex;
+    font-weight: 700;
+    color: #bababa;
+    background-color: #141313;
+    border-radius: 30px;
+    justify-content: center;
+    align-items: center;
 
-      @media screen and (max-width: @screen-md) {
-        span:not(.meridiem) {
-          font-size: 160px;
-        }
-      }
-
-      @media screen and (min-width: @screen-md) {
-        span:not(.meridiem) {
-          font-size: 160px;
-        }
-      }
-
-      @media screen and (max-width: @screen-sm) {
-        span:not(.meridiem) {
-          font-size: 90px;
-        }
-      }
-      @media screen and (min-width: @screen-lg) {
-        span:not(.meridiem) {
-          font-size: 220px;
-        }
-      }
-
-      @media screen and (min-width: @screen-xl) {
-        span:not(.meridiem) {
-          font-size: 260px;
-        }
-      }
-      @media screen and (min-width: @screen-2xl) {
-        span:not(.meridiem) {
-          font-size: 320px;
-        }
+    @media screen and (max-width: @screen-md) {
+      span:not(.meridiem) {
+        font-size: 160px;
       }
     }
 
-    &-entry {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: flex;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      justify-content: center;
-      align-items: center;
-
-      &-content {
-        width: 260px;
+    @media screen and (min-width: @screen-md) {
+      span:not(.meridiem) {
+        font-size: 160px;
       }
+    }
 
-      &__header {
-        text-align: center;
-
-        &-img {
-          width: 70px;
-          margin: 0 auto;
-          border-radius: 50%;
-        }
-
-        &-name {
-          margin-top: 5px;
-          font-weight: 500;
-          color: #bababa;
-        }
+    @media screen and (max-width: @screen-sm) {
+      span:not(.meridiem) {
+        font-size: 90px;
       }
-
-      &__err-msg {
-        display: inline-block;
-        margin-top: 10px;
-        color: @error-color;
+    }
+    @media screen and (min-width: @screen-lg) {
+      span:not(.meridiem) {
+        font-size: 220px;
       }
+    }
 
-      &__footer {
-        display: flex;
-        justify-content: space-between;
+    @media screen and (min-width: @screen-xl) {
+      span:not(.meridiem) {
+        font-size: 260px;
+      }
+    }
+    @media screen and (min-width: @screen-2xl) {
+      span:not(.meridiem) {
+        font-size: 320px;
       }
     }
   }
+
+  &-entry {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+
+    &-content {
+      width: 260px;
+    }
+
+    &__header {
+      text-align: center;
+
+      &-img {
+        width: 70px;
+        margin: 0 auto;
+        border-radius: 50%;
+      }
+
+      &-name {
+        margin-top: 5px;
+        font-weight: 500;
+        color: #bababa;
+      }
+    }
+
+    &__err-msg {
+      display: inline-block;
+      margin-top: 10px;
+      color: @error-color;
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
 </style>

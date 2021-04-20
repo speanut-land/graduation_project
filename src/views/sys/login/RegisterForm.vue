@@ -1,32 +1,32 @@
 <template>
   <template v-if="getShow">
-    <LoginFormTitle class="enter-x" />
-    <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
-      <FormItem name="account" class="enter-x">
+    <LoginFormTitle />
+    <Form class="p-4" :model="formData" :rules="getFormRules" ref="formRef">
+      <FormItem name="account">
         <Input
           size="large"
           v-model:value="formData.account"
           :placeholder="t('sys.login.userName')"
         />
       </FormItem>
-      <FormItem name="mobile" class="enter-x">
+      <FormItem name="mobile">
         <Input size="large" v-model:value="formData.mobile" :placeholder="t('sys.login.mobile')" />
       </FormItem>
-      <FormItem name="sms" class="enter-x">
+      <FormItem name="sms">
         <CountdownInput
           size="large"
           v-model:value="formData.sms"
           :placeholder="t('sys.login.smsCode')"
         />
       </FormItem>
-      <FormItem name="password" class="enter-x">
+      <FormItem name="password">
         <StrengthMeter
           size="large"
           v-model:value="formData.password"
           :placeholder="t('sys.login.password')"
         />
       </FormItem>
-      <FormItem name="confirmPassword" class="enter-x">
+      <FormItem name="confirmPassword">
         <InputPassword
           size="large"
           visibilityToggle
@@ -35,17 +35,10 @@
         />
       </FormItem>
 
-      <Button
-        type="primary"
-        class="enter-x"
-        size="large"
-        block
-        @click="handleRegister"
-        :loading="loading"
-      >
+      <Button type="primary" size="large" block @click="handleRegister" :loading="loading">
         {{ t("sys.login.registerButton") }}
       </Button>
-      <Button size="large" block class="enter-x mt-4" @click="handleBackLogin">
+      <Button size="large" block class="mt-4" @click="handleBackLogin">
         {{ t("sys.login.backSignIn") }}
       </Button>
     </Form>

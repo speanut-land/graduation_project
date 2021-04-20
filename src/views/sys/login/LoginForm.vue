@@ -1,10 +1,10 @@
 <template>
-  <LoginFormTitle v-show="getShow" class="enter-x" />
-  <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef" v-show="getShow">
-    <FormItem name="account" class="enter-x">
+  <LoginFormTitle v-show="getShow" />
+  <Form class="p-4" :model="formData" :rules="getFormRules" ref="formRef" v-show="getShow">
+    <FormItem name="account">
       <Input size="large" v-model:value="formData.account" :placeholder="t('sys.login.userName')" />
     </FormItem>
-    <FormItem name="password" class="enter-x">
+    <FormItem name="password">
       <InputPassword
         size="large"
         visibilityToggle
@@ -13,10 +13,9 @@
       />
     </FormItem>
 
-    <ARow class="enter-x">
+    <ARow>
       <ACol :span="12">
         <FormItem>
-          <!-- No logic, you need to deal with it yourself -->
           <Checkbox v-model:checked="rememberMe" size="small">
             {{ t("sys.login.rememberMe") }}
           </Checkbox>
@@ -24,7 +23,6 @@
       </ACol>
       <ACol :span="12">
         <FormItem :style="{ 'text-align': 'right' }">
-          <!-- No logic, you need to deal with it yourself -->
           <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
             {{ t("sys.login.forgetPassword") }}
           </Button>
@@ -32,14 +30,14 @@
       </ACol>
     </ARow>
 
-    <FormItem class="enter-x">
-      <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
-        {{ t("sys.login.loginButton") }}
-      </Button>
-    </FormItem>
-    <ARow class="enter-x">
-      <ACol :md="7" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
+    <ARow class="flex justify-between">
+      <ACol :span="11">
+        <Button type="primary" block @click="handleLogin" :loading="loading">
+          {{ t("sys.login.loginButton") }}
+        </Button>
+      </ACol>
+      <ACol :span="11">
+        <Button type="primary" block @click="setLoginState(LoginStateEnum.REGISTER)">
           {{ t("sys.login.registerButton") }}
         </Button>
       </ACol>
@@ -100,8 +98,8 @@ export default defineComponent({
     const rememberMe = ref(false);
 
     const formData = reactive({
-      account: "vben",
-      password: "123456",
+      account: "",
+      password: "",
     });
 
     const { validForm } = useFormValid(formRef);
