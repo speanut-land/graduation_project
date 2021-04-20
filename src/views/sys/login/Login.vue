@@ -6,9 +6,9 @@
     />
     <AppDarkModeToggle class="absolute top-3 right-7 enter-x" />
 
-    <div class="container relative h-full py-2 mx-auto sm:px-10">
-      <div class="flex h-full">
-        <div class="hidden xl:flex xl:flex-col xl:w-6/12 min-h-full mr-4 pl-4">
+    <div class="xl:container mx-auto relative h-full w-full py-2 px-10">
+      <div class="flex h-full w-full">
+        <div class="flex flex-col w-6/12 min-h-full mr-4 pl-4">
           <div class="my-auto">
             <img
               :alt="title"
@@ -23,7 +23,7 @@
             </div>
           </div>
         </div>
-        <div class="h-full xl:h-auto flex py-5 xl:py-0 xl:my-0 w-full xl:w-6/12">
+        <div class="h-full xl:h-auto flex py-5 xl:py-0 xl:my-0 xl:w-6/12">
           <div
             :class="`${prefixCls}-form`"
             class="my-auto mx-auto xl:ml-20 xl:bg-transparent px-5 py-8 sm:px-8 xl:p-4 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto enter-x relative"
@@ -31,8 +31,6 @@
             <LoginForm />
             <ForgetPasswordForm />
             <RegisterForm />
-            <MobileForm />
-            <QrCodeForm />
           </div>
         </div>
       </div>
@@ -47,8 +45,6 @@ import { AppLocalePicker, AppDarkModeToggle } from "/@/components/Application";
 import LoginForm from "./LoginForm.vue";
 import ForgetPasswordForm from "./ForgetPasswordForm.vue";
 import RegisterForm from "./RegisterForm.vue";
-import MobileForm from "./MobileForm.vue";
-import QrCodeForm from "./QrCodeForm.vue";
 
 import { useGlobSetting } from "/@/hooks/setting";
 import { useI18n } from "/@/hooks/web/useI18n";
@@ -62,8 +58,6 @@ export default defineComponent({
     LoginForm,
     ForgetPasswordForm,
     RegisterForm,
-    MobileForm,
-    QrCodeForm,
     AppLocalePicker,
     AppDarkModeToggle,
   },
@@ -117,14 +111,6 @@ html[data-theme="dark"] {
 
 .@{prefix-cls} {
   overflow: hidden;
-  @media (max-width: @screen-xl) {
-    background-color: #293146;
-
-    .@{prefix-cls}-form {
-      background-color: #fff;
-    }
-  }
-
   &::before {
     position: absolute;
     top: 0;
@@ -137,9 +123,6 @@ html[data-theme="dark"] {
     background-repeat: no-repeat;
     background-size: auto 100%;
     content: "";
-    @media (max-width: @screen-xl) {
-      display: none;
-    }
   }
 
   .@{logo-prefix-cls} {
@@ -188,18 +171,6 @@ html[data-theme="dark"] {
 
   input:not([type="checkbox"]) {
     min-width: 360px;
-
-    @media (max-width: @screen-lg) {
-      min-width: 300px;
-    }
-
-    @media (max-width: @screen-md) {
-      min-width: 280px;
-    }
-
-    @media (max-width: @screen-sm) {
-      min-width: 180px;
-    }
   }
   .@{countdown-prefix-cls} input {
     min-width: unset;
