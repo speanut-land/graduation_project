@@ -2,27 +2,28 @@
   <template v-if="getShow">
     <LoginFormTitle />
     <Form class="p-4" :model="formData" :rules="getFormRules" ref="formRef">
-      <FormItem name="account">
+      <FormItem name="username">
         <Input
           size="large"
-          v-model:value="formData.account"
+          v-model:value="formData.username"
           :placeholder="t('sys.login.userName')"
         />
       </FormItem>
-      <FormItem name="mobile">
-        <Input size="large" v-model:value="formData.mobile" :placeholder="t('sys.login.mobile')" />
+      <FormItem name="email">
+        <Input size="large" v-model:value="formData.email" :placeholder="t('sys.login.email')" />
       </FormItem>
-      <FormItem name="sms">
+      <FormItem name="emailCode">
         <CountdownInput
           size="large"
-          v-model:value="formData.sms"
-          :placeholder="t('sys.login.smsCode')"
+          v-model:value="formData.emailCode"
+          :placeholder="t('sys.login.emailCode')"
         />
       </FormItem>
       <FormItem name="password">
         <StrengthMeter
           size="large"
           v-model:value="formData.password"
+          autocomplete
           :placeholder="t('sys.login.password')"
         />
       </FormItem>
@@ -30,6 +31,7 @@
         <InputPassword
           size="large"
           visibilityToggle
+          autocomplete
           v-model:value="formData.confirmPassword"
           :placeholder="t('sys.login.confirmPassword')"
         />
@@ -45,7 +47,7 @@
   </template>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref, unref, computed } from "vue";
+import { defineComponent, reactive, ref, unref, computed, toRaw } from "vue";
 
 import LoginFormTitle from "./LoginFormTitle.vue";
 import { Form, Input, Button, Checkbox } from "ant-design-vue";
@@ -54,6 +56,7 @@ import { CountdownInput } from "/@/components/CountDown";
 
 import { useI18n } from "/@/hooks/web/useI18n";
 import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from "./useLogin";
+import { useUserStore } from "/@/store/modules/user";
 
 export default defineComponent({
   name: "RegisterPasswordForm",
@@ -76,12 +79,11 @@ export default defineComponent({
     const loading = ref(false);
 
     const formData = reactive({
-      account: "",
+      username: "",
       password: "",
       confirmPassword: "",
-      mobile: "",
-      sms: "",
-      policy: false,
+      email: "",
+      emailCode: "",
     });
 
     const { getFormRules } = useFormRules(formData);
@@ -89,10 +91,35 @@ export default defineComponent({
 
     const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER);
 
+    const resetFormData = () => {
+      formData.username = "";
+      formData.password = "";
+      formData.confirmPassword = "";
+      formData.email = "";
+      formData.emailCode = "";
+    };
+
     async function handleRegister() {
       const data = await validForm();
       if (!data) return;
-      console.log(data);
+      try {
+        loading.value = true;
+        const code = await useUserStore().registerUser(
+          toRaw({
+            password: data.password,
+            username: data.username,
+            email: data.email,
+            emailCode: data.emailCode,
+          })
+        );
+
+        if (!code) {
+          resetFormData();
+          handleBackLogin();
+        }
+      } finally {
+        loading.value = false;
+      }
     }
 
     return {

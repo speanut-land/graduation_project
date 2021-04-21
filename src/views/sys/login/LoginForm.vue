@@ -1,14 +1,19 @@
 <template>
   <LoginFormTitle v-show="getShow" />
   <Form class="p-4" :model="formData" :rules="getFormRules" ref="formRef" v-show="getShow">
-    <FormItem name="account">
-      <Input size="large" v-model:value="formData.account" :placeholder="t('sys.login.userName')" />
+    <FormItem name="username">
+      <Input
+        size="large"
+        v-model:value="formData.username"
+        :placeholder="t('sys.login.userName')"
+      />
     </FormItem>
     <FormItem name="password">
       <InputPassword
         size="large"
         visibilityToggle
         v-model:value="formData.password"
+        autocomplete
         :placeholder="t('sys.login.password')"
       />
     </FormItem>
@@ -16,13 +21,13 @@
     <ARow>
       <ACol :span="12">
         <FormItem>
-          <Checkbox v-model:checked="rememberMe" size="small">
+          <Checkbox v-model:checked="formData.isRemember" size="small">
             {{ t("sys.login.rememberMe") }}
           </Checkbox>
         </FormItem>
       </ACol>
       <ACol :span="12">
-        <FormItem :style="{ 'text-align': 'right' }">
+        <FormItem class="text-right">
           <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
             {{ t("sys.login.forgetPassword") }}
           </Button>
@@ -37,7 +42,7 @@
         </Button>
       </ACol>
       <ACol :span="11">
-        <Button type="primary" block @click="setLoginState(LoginStateEnum.REGISTER)">
+        <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
           {{ t("sys.login.registerButton") }}
         </Button>
       </ACol>
@@ -95,11 +100,11 @@ export default defineComponent({
 
     const formRef = ref();
     const loading = ref(false);
-    const rememberMe = ref(false);
 
     const formData = reactive({
-      account: "",
+      username: "",
       password: "",
+      isRemember: false,
     });
 
     const { validForm } = useFormValid(formRef);
@@ -116,13 +121,14 @@ export default defineComponent({
         const userInfo = await userStore.login(
           toRaw({
             password: data.password,
-            username: data.account,
+            username: data.username,
+            isRemember: data.isRemember,
           })
         );
         if (userInfo) {
           notification.success({
             message: t("sys.login.loginSuccessTitle"),
-            description: `${t("sys.login.loginSuccessDesc")}: ${userInfo.realName}`,
+            description: `${t("sys.login.loginSuccessDesc")}: ${userInfo.username}`,
             duration: 3,
           });
         }
@@ -137,7 +143,6 @@ export default defineComponent({
       formRef,
       formData,
       getFormRules,
-      rememberMe,
       handleLogin,
       loading,
       setLoginState,

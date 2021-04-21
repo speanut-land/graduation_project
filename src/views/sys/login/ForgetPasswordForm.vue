@@ -10,14 +10,20 @@
         />
       </FormItem>
 
-      <FormItem name="mobile">
-        <Input size="large" v-model:value="formData.mobile" :placeholder="t('sys.login.mobile')" />
-      </FormItem>
       <FormItem name="sms">
         <CountdownInput
           size="large"
           v-model:value="formData.sms"
-          :placeholder="t('sys.login.smsCode')"
+          :placeholder="t('sys.login.emailCode')"
+        />
+      </FormItem>
+
+      <FormItem name="password">
+        <StrengthMeter
+          size="large"
+          autocomplete
+          v-model:value="formData.password"
+          :placeholder="t('sys.login.password')"
         />
       </FormItem>
 
@@ -38,6 +44,7 @@ import { defineComponent, reactive, ref, computed, unref } from "vue";
 import LoginFormTitle from "./LoginFormTitle.vue";
 import { Form, Input, Button } from "ant-design-vue";
 import { CountdownInput } from "/@/components/CountDown";
+import { StrengthMeter } from "/@/components/StrengthMeter";
 
 import { useI18n } from "/@/hooks/web/useI18n";
 import { useLoginState, useFormRules, LoginStateEnum } from "./useLogin";
@@ -49,6 +56,7 @@ export default defineComponent({
     Form,
     FormItem: Form.Item,
     Input,
+    StrengthMeter,
     CountdownInput,
     LoginFormTitle,
   },

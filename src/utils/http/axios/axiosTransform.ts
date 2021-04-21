@@ -1,11 +1,10 @@
 /**
  * Data processing class, can be configured according to the project
  */
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { RequestOptions, Result } from './types';
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { RequestOptions, Result } from "./types";
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
-  prefixUrl?: string;
   transform?: AxiosTransform;
   requestOptions?: RequestOptions;
 }

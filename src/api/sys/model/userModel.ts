@@ -6,6 +6,15 @@ export interface LoginParams {
   password: string;
 }
 
+export interface UserModel {
+  id?: number;
+  username: string;
+  password: string;
+  email: string;
+  emailCode: number;
+  role?: number;
+}
+
 /**
  * @description: Get user information
  */
