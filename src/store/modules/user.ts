@@ -8,7 +8,7 @@ import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from "/@/enums/cacheEnum";
 import { getAuthCache, setAuthCache } from "/@/utils/auth";
 import { LoginParams, UserModel } from "/@/api/sys/model/userModel";
 
-import { createUser, loginApi } from "/@/api/sys/user";
+import { createUser, loginApi, updateUserPwd } from "/@/api/sys/user";
 
 import { useI18n } from "/@/hooks/web/useI18n";
 import { useMessage } from "/@/hooks/web/useMessage";
@@ -79,6 +79,11 @@ export const useUserStore = defineStore({
 
     async registerUser(params: UserModel): Promise<number> {
       const { code } = await createUser(params);
+      return code;
+    },
+
+    async resetUserPwd(params: UserModel): Promise<number> {
+      const { code } = await updateUserPwd(params);
       return code;
     },
 

@@ -8,10 +8,10 @@ export interface LoginParams {
 
 export interface UserModel {
   id?: number;
-  username: string;
+  username?: string;
   password: string;
-  email: string;
-  emailCode: number;
+  email?: string;
+  emailCode?: number;
   role?: number;
 }
 

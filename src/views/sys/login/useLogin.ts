@@ -88,14 +88,12 @@ export function useFormRules(formData?: Recordable) {
       case LoginStateEnum.RESET_PASSWORD:
         return {
           account: accountFormRule,
-          ...mobileRule,
+          password: passwordFormRule,
+          confirmPassword: [
+            { validator: validateConfirmPassword(formData?.password), trigger: "change" },
+          ],
         };
 
-      // mobile form rules
-      case LoginStateEnum.MOBILE:
-        return mobileRule;
-
-      // login form rules
       default:
         return {
           account: accountFormRule,

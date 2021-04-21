@@ -40,7 +40,7 @@
       <Button type="primary" size="large" block @click="handleRegister" :loading="loading">
         {{ t("sys.login.registerButton") }}
       </Button>
-      <Button size="large" block class="mt-4" @click="handleBackLogin">
+      <Button size="large" block class="mt-4" @click="handleBackLoginWrapper">
         {{ t("sys.login.backSignIn") }}
       </Button>
     </Form>
@@ -91,13 +91,10 @@ export default defineComponent({
 
     const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER);
 
-    const resetFormData = () => {
-      formData.username = "";
-      formData.password = "";
-      formData.confirmPassword = "";
-      formData.email = "";
-      formData.emailCode = "";
-    };
+    function handleBackLoginWrapper() {
+      formRef.value.resetFields();
+      handleBackLogin();
+    }
 
     async function handleRegister() {
       const data = await validForm();
@@ -113,15 +110,11 @@ export default defineComponent({
           })
         );
 
-        if (!code) {
-          resetFormData();
-          handleBackLogin();
-        }
+        if (!code) handleBackLoginWrapper();
       } finally {
         loading.value = false;
       }
     }
-
     return {
       t,
       formRef,
@@ -131,6 +124,7 @@ export default defineComponent({
       loading,
       handleBackLogin,
       getShow,
+      handleBackLoginWrapper,
     };
   },
 });

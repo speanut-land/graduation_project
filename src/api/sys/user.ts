@@ -6,6 +6,7 @@ import { ResponseModel } from "./model/responseModel";
 enum Api {
   UserLogin = "/user/login",
   User = "/user",
+  updateUserPwd = "/updateUserPwd",
   GetPermCodeByUserId = "/getPermCodeByUserId",
 }
 
@@ -19,6 +20,13 @@ export function loginApi(params: LoginParams) {
 export function createUser(params: UserModel) {
   return defHttp.post<ResponseModel>({
     url: Api.User,
+    params,
+  });
+}
+
+export function updateUserPwd(params: UserModel) {
+  return defHttp.put<ResponseModel>({
+    url: Api.updateUserPwd,
     params,
   });
 }
