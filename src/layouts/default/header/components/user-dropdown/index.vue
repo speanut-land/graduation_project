@@ -12,18 +12,6 @@
     <template #overlay>
       <Menu @click="handleMenuClick">
         <MenuItem
-          key="doc"
-          :text="t('layout.header.dropdownItemDoc')"
-          icon="ion:document-text-outline"
-          v-if="getShowDoc"
-        />
-        <MenuDivider v-if="getShowDoc" />
-        <MenuItem
-          key="lock"
-          :text="t('layout.header.tooltipLock')"
-          icon="ion:lock-closed-outline"
-        />
-        <MenuItem
           key="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
           icon="ion:power-outline"
@@ -70,7 +58,6 @@ export default defineComponent({
   setup() {
     const { prefixCls } = useDesign("header-user-dropdown");
     const { t } = useI18n();
-    const { getShowDoc } = useHeaderSetting();
     const userStore = useUserStore();
 
     const getUserInfo = computed(() => {
@@ -99,12 +86,6 @@ export default defineComponent({
         case "logout":
           handleLoginOut();
           break;
-        case "doc":
-          openDoc();
-          break;
-        case "lock":
-          handleLock();
-          break;
       }
     }
 
@@ -113,7 +94,6 @@ export default defineComponent({
       t,
       getUserInfo,
       handleMenuClick,
-      getShowDoc,
       headerImg,
       register,
     };

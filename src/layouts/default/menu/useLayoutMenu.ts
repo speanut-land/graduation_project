@@ -1,22 +1,20 @@
-import type { Menu } from '/@/router/types';
-import type { Ref } from 'vue';
+import type { Menu } from "/@/router/types";
+import type { Ref } from "vue";
 
-import { watch, unref, ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { watch, unref, ref, computed } from "vue";
+import { useRouter } from "vue-router";
 
-import { MenuSplitTyeEnum } from '/@/enums/menuEnum';
-import { useThrottleFn } from '@vueuse/core';
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
+import { MenuSplitTyeEnum } from "/@/enums/menuEnum";
+import { useThrottleFn } from "@vueuse/core";
+import { useMenuSetting } from "/@/hooks/setting/useMenuSetting";
 
-import { getChildrenMenus, getCurrentParentPath, getMenus, getShallowMenus } from '/@/router/menus';
-import { usePermissionStore } from '/@/store/modules/permission';
-import { useAppInject } from '/@/hooks/web/useAppInject';
+import { getChildrenMenus, getCurrentParentPath, getMenus } from "/@/router/menus";
+import { usePermissionStore } from "/@/store/modules/permission";
 
 export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
   // Menu array
   const menusRef = ref<Menu[]>([]);
   const { currentRoute } = useRouter();
-  const { getIsMobile } = useAppInject();
   const permissionStore = usePermissionStore();
   const { setMenuSetting, getIsHorizontal, getSplit } = useMenuSetting();
 
@@ -30,16 +28,10 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
     () => !unref(getSplit) || unref(splitType) !== MenuSplitTyeEnum.LEFT
   );
 
-  const getSpiltTop = computed(() => unref(splitType) === MenuSplitTyeEnum.TOP);
-
-  const normalType = computed(() => {
-    return unref(splitType) === MenuSplitTyeEnum.NONE || !unref(getSplit);
-  });
-
   watch(
     [() => unref(currentRoute).path, () => unref(splitType)],
     async ([path]: [string, MenuSplitTyeEnum]) => {
-      if (unref(splitNotLeft) || unref(getIsMobile)) return;
+      if (unref(splitNotLeft)) return;
 
       const { meta } = unref(currentRoute);
       const currentActiveMenu = meta.currentActiveMenu as string;
@@ -76,7 +68,7 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
 
   // Handle left menu split
   async function handleSplitLeftMenu(parentPath: string) {
-    if (unref(getSplitLeft) || unref(getIsMobile)) return;
+    if (unref(getSplitLeft)) return;
 
     // spilt mode left
     const children = await getChildrenMenus(parentPath);
@@ -93,19 +85,7 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
 
   // get menus
   async function genMenus() {
-    // normal mode
-    if (unref(normalType) || unref(getIsMobile)) {
-      menusRef.value = await getMenus();
-      return;
-    }
-
-    // split-top
-    if (unref(getSpiltTop)) {
-      const shallowMenus = await getShallowMenus();
-
-      menusRef.value = shallowMenus;
-      return;
-    }
+    menusRef.value = await getMenus();
   }
 
   return { menusRef };

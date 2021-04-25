@@ -2,7 +2,6 @@
   <div :style="getPlaceholderDomStyle" v-if="getIsShowPlaceholderDom"></div>
   <div :style="getWrapStyle" :class="getClass">
     <LayoutHeader v-if="getShowInsetHeaderRef" />
-    <MultipleTabs v-if="getShowTabs" />
   </div>
 </template>
 <script lang="ts">
@@ -29,7 +28,6 @@ export default defineComponent({
     const { prefixCls } = useDesign("layout-multiple-header");
 
     const { getCalcContentWidth, getSplit } = useMenuSetting();
-    const { getIsMobile } = useAppInject();
     const {
       getFixed,
       getShowInsetHeaderRef,
@@ -40,12 +38,6 @@ export default defineComponent({
 
     const { getFullContent } = useFullContent();
 
-    const { getShowMultipleTab } = useMultipleTabSetting();
-
-    const getShowTabs = computed(() => {
-      return unref(getShowMultipleTab) && !unref(getFullContent);
-    });
-
     const getIsShowPlaceholderDom = computed(() => {
       return unref(getFixed) || unref(getShowFullHeaderRef);
     });
@@ -54,7 +46,7 @@ export default defineComponent({
       (): CSSProperties => {
         const style: CSSProperties = {};
         if (unref(getFixed)) {
-          style.width = unref(getIsMobile) ? "100%" : unref(getCalcContentWidth);
+          style.width = unref(getCalcContentWidth);
         }
         if (unref(getShowFullHeaderRef)) {
           style.top = `${HEADER_HEIGHT}px`;
@@ -76,9 +68,6 @@ export default defineComponent({
           !unref(getFullContent)
         ) {
           height += HEADER_HEIGHT;
-        }
-        if (unref(getShowMultipleTab) && !unref(getFullContent)) {
-          height += TABS_HEIGHT;
         }
         headerHeightRef.value = height;
         return {
@@ -102,7 +91,6 @@ export default defineComponent({
       getIsFixed,
       getWrapStyle,
       getIsShowPlaceholderDom,
-      getShowTabs,
       getShowInsetHeaderRef,
     };
   },
