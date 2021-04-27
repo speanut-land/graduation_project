@@ -1,6 +1,6 @@
-import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
-import { unref } from 'vue';
-import { isObject } from '/@/utils/is';
+import type { RouteLocationNormalized, RouteRecordNormalized } from "vue-router";
+import { unref } from "vue";
+import { isObject } from "/@/utils/is";
 
 export const noop = () => {};
 
@@ -22,12 +22,12 @@ export function getPopupContainer(node?: HTMLElement): HTMLElement {
  *  ==>www.baidu.com?a=3&b=4
  */
 export function setObjToUrlParams(baseUrl: string, obj: any): string {
-  let parameters = '';
+  let parameters = "";
   for (const key in obj) {
-    parameters += key + '=' + encodeURIComponent(obj[key]) + '&';
+    parameters += key + "=" + encodeURIComponent(obj[key]) + "&";
   }
-  parameters = parameters.replace(/&$/, '');
-  return /\?$/.test(baseUrl) ? baseUrl + parameters : baseUrl.replace(/\/?$/, '?') + parameters;
+  parameters = parameters.replace(/&$/, "");
+  return /\?$/.test(baseUrl) ? baseUrl + parameters : baseUrl.replace(/\/?$/, "?") + parameters;
 }
 
 export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
@@ -42,13 +42,13 @@ export function openWindow(
   url: string,
   opt?: { target?: TargetContext | string; noopener?: boolean; noreferrer?: boolean }
 ) {
-  const { target = '__blank', noopener = true, noreferrer = true } = opt || {};
+  const { target = "__blank", noopener = true, noreferrer = true } = opt || {};
   const feature: string[] = [];
 
-  noopener && feature.push('noopener=yes');
-  noreferrer && feature.push('noreferrer=yes');
+  noopener && feature.push("noopener=yes");
+  noreferrer && feature.push("noreferrer=yes");
 
-  window.open(url, target, feature.join(','));
+  window.open(url, target, feature.join(","));
 }
 
 // dynamic use hook props
@@ -75,4 +75,14 @@ export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormal
         }))
       : undefined) as RouteRecordNormalized[],
   };
+}
+
+export function createRule(message: string) {
+  return [
+    {
+      required: true,
+      message,
+      trigger: "change",
+    },
+  ];
 }

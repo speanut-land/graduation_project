@@ -53,13 +53,6 @@
 import { defineComponent, reactive, ref, toRaw, unref, computed } from "vue";
 
 import { Checkbox, Form, Input, Row, Col, Button, Divider } from "ant-design-vue";
-import {
-  GithubFilled,
-  WechatFilled,
-  AlipayCircleFilled,
-  GoogleCircleFilled,
-  TwitterCircleFilled,
-} from "@ant-design/icons-vue";
 import LoginFormTitle from "./LoginFormTitle.vue";
 
 import { useI18n } from "/@/hooks/web/useI18n";
@@ -83,16 +76,10 @@ export default defineComponent({
     Divider,
     LoginFormTitle,
     InputPassword: Input.Password,
-    GithubFilled,
-    WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
   },
   setup() {
     const { t } = useI18n();
     const { notification } = useMessage();
-    const { prefixCls } = useDesign("login");
     const userStore = useUserStore();
 
     const { setLoginState, getLoginState } = useLoginState();
@@ -139,7 +126,6 @@ export default defineComponent({
 
     return {
       t,
-      prefixCls,
       formRef,
       formData,
       getFormRules,

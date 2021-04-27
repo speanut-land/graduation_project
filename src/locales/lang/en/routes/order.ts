@@ -1,3 +1,5 @@
 export default {
-  dashboard: "Dashboard",
+  order: "Order",
+  detail: "Detail",
+  list: "List",
 };

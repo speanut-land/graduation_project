@@ -1,5 +1,5 @@
 export default {
-  shop: "shop",
-  detail: "detail",
-  list: "list",
+  shop: "Shop",
+  detail: "Detail",
+  list: "List",
 };

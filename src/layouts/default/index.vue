@@ -71,9 +71,5 @@ export default defineComponent({
   > .ant-layout {
     min-height: 100%;
   }
-
-  &-main {
-    margin-left: 1px;
-  }
 }
 </style>

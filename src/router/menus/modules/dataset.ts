@@ -2,14 +2,18 @@ import type { MenuModule } from "/@/router/types";
 import { t } from "/@/hooks/web/useI18n";
 
 const menu: MenuModule = {
-  orderNo: 10,
+  orderNo: 30,
   menu: {
-    name: t("routes.shop.shop"),
-    path: "/shop",
+    name: t("routes.dataset.dataset"),
+    path: "/dataset",
     children: [
       {
         path: "list",
-        name: t("routes.shop.list"),
+        name: t("routes.dataset.list"),
+      },
+      {
+        path: "upload",
+        name: t("routes.dataset.upload"),
       },
     ],
   },

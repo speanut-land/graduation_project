@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from "vue-router";
 import type { App } from "vue";
 
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 import { basicRoutes, LoginRoute } from "./routes";
 import { REDIRECT_NAME } from "./constant";
 
