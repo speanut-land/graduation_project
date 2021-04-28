@@ -114,7 +114,6 @@ export default defineComponent({
 
     const {
       getHeaderTheme,
-      getUseLockPage,
       getShowFullScreen,
       getShowNotice,
       getShowContent,
@@ -171,7 +170,6 @@ export default defineComponent({
       getShowLocalePicker,
       getShowFullScreen,
       getShowNotice,
-      getUseLockPage,
       getUseErrorHandle,
       getLogoWidth,
       getIsMixSidebar,

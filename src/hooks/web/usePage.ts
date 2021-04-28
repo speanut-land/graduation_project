@@ -1,15 +1,15 @@
-import type { RouteLocationRaw, Router } from 'vue-router';
+import type { RouteLocationRaw, Router } from "vue-router";
 
-import { PageEnum } from '/@/enums/pageEnum';
-import { isString } from '/@/utils/is';
-import { unref } from 'vue';
+import { PageEnum } from "/@/enums/pageEnum";
+import { isString } from "/@/utils/is";
+import { unref } from "vue";
 
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
-export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & { path: PageEnum };
+export type RouteLocationRawEx = Omit<RouteLocationRaw, "path"> & { path: PageEnum };
 
 function handleError(e: Error) {
-  console.error(e);
+  // console.error(e);
 }
 
 // page switch
@@ -46,7 +46,7 @@ export const useRedo = (_router?: Router) => {
   function redo(): Promise<boolean> {
     return new Promise((resolve) => {
       push({
-        path: '/redirect' + unref(currentRoute).fullPath,
+        path: "/redirect" + unref(currentRoute).fullPath,
         query,
         params,
       }).then(() => resolve(true));

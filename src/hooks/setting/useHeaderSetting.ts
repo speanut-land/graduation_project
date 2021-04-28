@@ -1,13 +1,13 @@
-import type { HeaderSetting } from '/#/config';
+import type { HeaderSetting } from "/#/config";
 
-import { computed, unref } from 'vue';
+import { computed, unref } from "vue";
 
-import { useAppStore } from '/@/store/modules/app';
+import { useAppStore } from "/@/store/modules/app";
 
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
-import { useRootSetting } from '/@/hooks/setting/useRootSetting';
-import { useFullContent } from '/@/hooks/web/useFullContent';
-import { MenuModeEnum } from '/@/enums/menuEnum';
+import { useMenuSetting } from "/@/hooks/setting/useMenuSetting";
+import { useRootSetting } from "/@/hooks/setting/useRootSetting";
+import { useFullContent } from "/@/hooks/web/useFullContent";
+import { MenuModeEnum } from "/@/enums/menuEnum";
 
 export function useHeaderSetting() {
   const { getFullContent } = useFullContent();
@@ -58,8 +58,6 @@ export function useHeaderSetting() {
 
   const getShowSearch = computed(() => appStore.getHeaderSetting.showSearch);
 
-  const getUseLockPage = computed(() => appStore.getHeaderSetting.useLockPage);
-
   const getShowFullScreen = computed(() => appStore.getHeaderSetting.showFullScreen);
 
   const getShowNotice = computed(() => appStore.getHeaderSetting.showNotice);
@@ -88,7 +86,6 @@ export function useHeaderSetting() {
     getShowDoc,
     getShowSearch,
     getHeaderTheme,
-    getUseLockPage,
     getShowFullScreen,
     getShowNotice,
     getShowBread,

@@ -1,18 +1,30 @@
 <template>
-  <vue-json-pretty :path="'res'" :deep="3" :showLength="true" :data="data" />
+  <vue-json-pretty
+    :path="'res'"
+    :deep="3"
+    :showLength="true"
+    :data="data"
+    @change="handleJsonChange"
+  />
 </template>
 
 <script lang="ts">
-  import VueJsonPretty from 'vue-json-pretty';
-  import 'vue-json-pretty/lib/styles.css';
-  import { defineComponent } from 'vue';
-  export default defineComponent({
-    name: 'JsonPreview',
-    components: {
-      VueJsonPretty,
-    },
-    props: {
-      data: Object,
-    },
-  });
+import VueJsonPretty from "vue-json-pretty";
+import "vue-json-pretty/lib/styles.css";
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "JsonPreview",
+  components: {
+    VueJsonPretty,
+  },
+  props: {
+    data: Object,
+  },
+  setup() {
+    function handleJsonChange(newVal, oldVal) {
+      console.log(newVal, oldVal);
+    }
+    return { handleJsonChange };
+  },
+});
 </script>
