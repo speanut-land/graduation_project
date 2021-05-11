@@ -3,5 +3,5 @@
  */
 export interface ResponseModel {
   code: number;
-  msg: string;
+  message: string;
 }

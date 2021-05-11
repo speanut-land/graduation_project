@@ -300,7 +300,7 @@ export default defineComponent({
   }
 
   .ant-form-explain {
-    font-size: 14px;
+    font-size: 0px;
   }
 
   &--compact {

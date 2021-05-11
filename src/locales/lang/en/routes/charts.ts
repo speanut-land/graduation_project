@@ -4,4 +4,5 @@ export default {
   line: "line",
   map: "map",
   demo: "demo",
+  basicLine: "basicLine",
 };

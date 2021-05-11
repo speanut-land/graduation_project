@@ -48,6 +48,14 @@ const dashboard: AppRouteModule = {
         },
       ],
     },
+    {
+      path: "basic-line",
+      name: "BasicLine",
+      component: () => import("/@/views/charts/BasicLine.vue"),
+      meta: {
+        title: t("routes.charts.basicLine"),
+      },
+    },
   ],
 };
 

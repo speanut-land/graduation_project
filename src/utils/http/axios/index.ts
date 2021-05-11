@@ -46,7 +46,7 @@ const transform: AxiosTransform = {
       return errorResult;
     }
 
-    const { code, result, message } = data;
+    const { code, message } = data;
 
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && Reflect.has(data, "code") && code === ResultEnum.SUCCESS;
@@ -65,7 +65,7 @@ const transform: AxiosTransform = {
 
     // 接口请求成功，直接返回结果
     if (code === ResultEnum.SUCCESS) {
-      return result;
+      return data;
     }
     // 接口请求错误，统一提示错误信息
     if (code === ResultEnum.ERROR) {

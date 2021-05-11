@@ -26,6 +26,10 @@ const menu: MenuModule = {
           },
         ],
       },
+      {
+        path: "basic-line",
+        name: t("routes.charts.basicLine"),
+      },
     ],
   },
 };

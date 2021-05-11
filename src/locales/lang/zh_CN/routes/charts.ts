@@ -4,4 +4,5 @@ export default {
   line: "线图",
   map: "地图",
   demo: "图表示例",
+  basicLine: "基本线图",
 };
