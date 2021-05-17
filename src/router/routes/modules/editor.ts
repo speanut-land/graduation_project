@@ -37,6 +37,14 @@ const dashboard: AppRouteModule = {
         title: t("routes.editor.tinymceBasic"),
       },
     },
+    {
+      path: "chartEditor",
+      component: () => import("/@/views/editor/chartEditor/index.vue"),
+      name: "chartEditor",
+      meta: {
+        title: t("routes.editor.chartEditor"),
+      },
+    },
   ],
 };
 

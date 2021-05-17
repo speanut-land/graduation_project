@@ -5,17 +5,9 @@
         <BellOutlined />
       </Badge>
       <template #content>
-        <Tabs>
-          <template v-for="item in tabListData" :key="item.key">
-            <TabPane>
-              <template #tab>
-                {{ item.name }}
-                <span v-if="item.list.length !== 0">({{ item.list.length }})</span>
-              </template>
-              <NoticeList :list="item.list" />
-            </TabPane>
-          </template>
-        </Tabs>
+        <template v-for="item in tabListData" :key="item.key">
+          <NoticeList :list="item.list" />
+        </template>
       </template>
     </Popover>
   </div>

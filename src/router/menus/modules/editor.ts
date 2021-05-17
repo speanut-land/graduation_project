@@ -31,6 +31,16 @@ const menu: MenuModule = {
           },
         ],
       },
+      {
+        path: "chartEditor",
+        name: t("routes.editor.chartEditor"),
+        children: [
+          {
+            path: "index",
+            name: t("routes.editor.chartEditor"),
+          },
+        ],
+      },
     ],
   },
 };

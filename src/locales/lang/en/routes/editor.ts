@@ -1,9 +1,10 @@
 export default {
-  editor: 'Editor',
-  jsonEditor: 'Json editor',
-  markdown: 'Markdown editor',
+  editor: "Editor",
+  jsonEditor: "Json editor",
+  markdown: "Markdown editor",
 
-  tinymce: 'Rich text',
-  tinymceBasic: 'Basic',
-  tinymceForm: 'embedded form',
+  tinymce: "Rich text",
+  tinymceBasic: "Basic",
+  tinymceForm: "embedded form",
+  chartEditor: "Chart editor",
 };
