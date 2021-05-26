@@ -1,4 +1,4 @@
-import * as echarts from 'echarts/core';
+import * as echarts from "echarts/core";
 
 import {
   BarChart,
@@ -7,7 +7,7 @@ import {
   MapChart,
   PictorialBarChart,
   RadarChart,
-} from 'echarts/charts';
+} from "echarts/charts";
 
 import {
   TitleComponent,
@@ -18,9 +18,10 @@ import {
   ParallelComponent,
   LegendComponent,
   RadarComponent,
-} from 'echarts/components';
+  DatasetComponent,
+} from "echarts/components";
 
-import { SVGRenderer } from 'echarts/renderers';
+import { SVGRenderer } from "echarts/renderers";
 
 echarts.use([
   LegendComponent,
@@ -30,6 +31,7 @@ echarts.use([
   PolarComponent,
   AriaComponent,
   ParallelComponent,
+  DatasetComponent,
   BarChart,
   LineChart,
   PieChart,

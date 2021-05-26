@@ -58,22 +58,14 @@ export function useECharts(
 
   function setOptions(options: EChartsOption, clear = true) {
     cacheOptions.value = options;
-    if (unref(elRef)?.offsetHeight === 0) {
-      useTimeoutFn(() => {
-        setOptions(unref(getOptions));
-      }, 30);
-      return;
-    }
     nextTick(() => {
       useTimeoutFn(() => {
         if (!chartInstance) {
-          initCharts(getDarkMode.value as "default");
-
+          initCharts();
           if (!chartInstance) return;
         }
         clear && chartInstance?.clear();
-
-        chartInstance?.setOption(unref(getOptions));
+        chartInstance?.setOption(options);
       }, 30);
     });
   }
@@ -81,17 +73,6 @@ export function useECharts(
   function resize() {
     chartInstance?.resize();
   }
-
-  watch(
-    () => getDarkMode.value,
-    (theme) => {
-      if (chartInstance) {
-        chartInstance.dispose();
-        initCharts(theme as "default");
-        setOptions(cacheOptions.value);
-      }
-    }
-  );
 
   tryOnUnmounted(() => {
     if (!chartInstance) return;
